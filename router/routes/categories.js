@@ -3,7 +3,9 @@ var router = express.Router();
 
 router.get('/', function(req, res) {
   //TODO: Need to implement.
-  res.send('Success!');
+  client.get('categories', function (err, obj) {
+    res.send(JSON.parse(obj));
+  });
 });
 
 module.exports = router;

@@ -17,6 +17,13 @@ router.get('/', function(req, res) {
 //  client.lindex('goodsList',0, function (err, item) {
 //    res.send(item);
 //  });
+  router.post('/add', function (req, res) {
+    res.send(req.param('id'));
+    client.get('customItems', function (err, data){
+      var customItems = JSON.parse(data);
+
+    })
+  });
 
 });
 

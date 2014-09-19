@@ -74,7 +74,8 @@ var categories = [ {id: 1, name: 'drink'},
   {id: 2, name: 'fruit'},
   {id: 3, name: 'sport'}];
 client.set('items',JSON.stringify(goodsList),function(err,reply){
-client.set('categories',JSON.stringify(categories));
 });
+client.set('categories',JSON.stringify(categories));
+client.set('customItems',JSON.stringify([]));
 
 module.exports = app;

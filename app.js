@@ -63,10 +63,18 @@ var lychee = {id: 'ITEM000002', name: '荔枝', unit: '斤', price: 15.00, categ
 var badminton = {id: 'ITEM000003', name: '羽毛球', unit: '个', price: 4.50, category: 'sport'};
 var goodsList = [];
 goodsList.push(cocacola, sprite, lychee, badminton);
-client.set('goodsList', goodsList);
-client.set('catagary', [
-  {id: 1, name: 'drink'},
+client.rpush('goodsList', JSON.stringify(cocacola), function (err, relpy) {});
+client.set('massage','hello');
+//client.lpush('catagary',
+//  {id: 1, name: 'drink'},
+//  {id: 2, name: 'fruit'},
+//  {id: 3, name: 'sport'}
+//);
+var categories = [ {id: 1, name: 'drink'},
   {id: 2, name: 'fruit'},
-  {id: 3, name: 'sport'}
-]);
+  {id: 3, name: 'sport'}];
+client.set('items',JSON.stringify(goodsList),function(err,reply){
+client.set('categories',JSON.stringify(cocacola));
+});
+
 module.exports = app;

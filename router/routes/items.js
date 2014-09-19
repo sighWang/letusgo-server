@@ -6,20 +6,21 @@ router.get('/', function(req, res) {
   client.get('items', function (err, obj) {
     res.send(JSON.parse(obj));
   });
-  router.post('/add', function (req, res) {
-    res.send(req.param('id'));
-    client.get('customItems', function (err, data){
-      var customItems = JSON.parse(data);
-
-    })
+});
+router.post('/add', function (req, res) {
+  res.send(req.param('id'));
+  client.get('customItems', function (err, data){
+    var customItems = JSON.parse(data);
+    client.set('customItems',customItems);
+  })
+});
+router.get('/customItems', function (req, res){
+  client.get('customItems', function (err, obj){
+    res.send(JSON.parse(obj));
   });
-
 });
-
-router.get('/api/items', function (req, res) {
-  var items = client.get('goodsList');
-  console.log(items);
-  res.send(items);
+router.post('/customItems/edit', function (req, res) {
+  var customItems = req.param('customItems');
+  client.set('customItems',customItems);
 });
-
 module.exports = router;

@@ -31,7 +31,7 @@ if (app.get('env') === 'development') {
 
   // development error handler
   // will print stacktrace
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -48,7 +48,7 @@ if (app.get('env') === 'production') {
 
   // production error handler
   // no stacktraces leaked to user
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -56,19 +56,21 @@ if (app.get('env') === 'production') {
     });
   });
 }
-var client =  redis.createClient();
+var client = redis.createClient();
 var cocacola = {id: 'ITEM000000', name: '可口可乐', unit: '瓶', price: 3.00, category: 'drink'};
 var sprite = {id: 'ITEM000001', name: '雪碧', unit: '瓶', price: 3.00, category: 'drink'};
 var lychee = {id: 'ITEM000002', name: '荔枝', unit: '斤', price: 15.00, category: 'fruit'};
 var badminton = {id: 'ITEM000003', name: '羽毛球', unit: '个', price: 4.50, category: 'sport'};
 var goodsList = [];
 goodsList.push(cocacola, sprite, lychee, badminton);
-var categories = [ {id: 1, name: 'drink'},
+var categories = [
+  {id: 1, name: 'drink'},
   {id: 2, name: 'fruit'},
-  {id: 3, name: 'sport'}];
-client.set('items',JSON.stringify(goodsList),function(err,reply){
+  {id: 3, name: 'sport'}
+];
+client.set('items', JSON.stringify(goodsList), function (err, reply) {
 });
-client.set('categories',JSON.stringify(categories));
-client.set('customItems',JSON.stringify([]));
+client.set('categories', JSON.stringify(categories));
+client.set('customItems', JSON.stringify([]));
 
 module.exports = app;

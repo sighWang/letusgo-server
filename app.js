@@ -55,13 +55,6 @@ if (app.get('env') === 'production') {
 }
 var client = redis.createClient();
 
-var categories = [
-  {id: 1, name: 'drink'},
-  {id: 2, name: 'fruit'},
-  {id: 3, name: 'sport'}
-];
-
-client.set('categories', JSON.stringify(categories));
 
 
 // routes

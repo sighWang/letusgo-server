@@ -8,8 +8,6 @@ var redis = require('redis');
 
 var app = express();
 
-// routes
-var router = require('./router')(app);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -73,4 +71,6 @@ client.set('items', JSON.stringify(goodsList), function (err, reply) {
 client.set('categories', JSON.stringify(categories));
 client.set('customItems', JSON.stringify([]));
 
+// routes
+var router = require('./router')(app);
 module.exports = app;

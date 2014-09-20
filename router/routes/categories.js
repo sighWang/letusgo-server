@@ -2,13 +2,7 @@ var express = require('express');
 var router = express.Router();
 var redis = require('redis');
 var client = redis.createClient();
-var categories = [
-  {id: 1, name: 'drink'},
-  {id: 2, name: 'fruit'},
-  {id: 3, name: 'sport'}
-];
-client.set('categories', JSON.stringify(categories));
-
+client.HMSET('categories', '1','drink', '2','fruit', '3','sport');
 
 client.hset('test', '1', 'sigh');
 router.get('/test', function (req, res) {

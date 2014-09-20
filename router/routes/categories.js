@@ -10,10 +10,10 @@ var categories = [
 client.set('categories', JSON.stringify(categories));
 
 
-client.hset('test','1','sigh');
-router.get('/test', function (req, res){
+client.hset('test', '1', 'sigh');
+router.get('/test', function (req, res) {
   console.log('enter');
-  res.send(client.hget('test','1'));
+  res.send(client.hget('test', '1'));
 });
 router.get('/manage', function (req, res) {
   client.get('categories', function (err, obj) {
@@ -22,12 +22,12 @@ router.get('/manage', function (req, res) {
 });
 
 router.post('/', function (req, res) {
- // client.set('categories', req.body);
+  // client.set('categories', req.body);
   console.log(req.param('id'));
   res.send(req.param('id'));
 });
 
-router.delete('/',function (req, res) {
+router.delete('/', function (req, res) {
   res.send(req.param('id'));
 });
 module.exports = router;

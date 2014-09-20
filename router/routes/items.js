@@ -8,6 +8,10 @@ var lychee = {id: 'ITEM000002', name: '荔枝', unit: '斤', price: 15.00, categ
 var badminton = {id: 'ITEM000003', name: '羽毛球', unit: '个', price: 4.50, category: 'sport'};
 var goodsList = [];
 goodsList.push(cocacola, sprite, lychee, badminton);
+client.set('items', JSON.stringify(goodsList), function (err, reply) {
+});
+client.set('customItems', JSON.stringify([]));
+
 router.get('/', function (req, res) {
   client.get('items', function (err, obj) {
     res.send(JSON.parse(obj));

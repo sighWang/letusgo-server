@@ -15,6 +15,8 @@ router.post('/', function (req, res) {
 });
 
 router.delete('/', function (req, res) {
+  client.hdel('categories', req.param('id'));
   res.send(req.param('id'));
 });
+
 module.exports = router;

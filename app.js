@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var redis = require('redis');
 
 var app = express();
 
@@ -55,12 +54,7 @@ if (app.get('env') === 'production') {
   });
 }
 var client = redis.createClient();
-var cocacola = {id: 'ITEM000000', name: '可口可乐', unit: '瓶', price: 3.00, category: 'drink'};
-var sprite = {id: 'ITEM000001', name: '雪碧', unit: '瓶', price: 3.00, category: 'drink'};
-var lychee = {id: 'ITEM000002', name: '荔枝', unit: '斤', price: 15.00, category: 'fruit'};
-var badminton = {id: 'ITEM000003', name: '羽毛球', unit: '个', price: 4.50, category: 'sport'};
-var goodsList = [];
-goodsList.push(cocacola, sprite, lychee, badminton);
+
 var categories = [
   {id: 1, name: 'drink'},
   {id: 2, name: 'fruit'},

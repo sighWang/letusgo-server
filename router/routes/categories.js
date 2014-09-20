@@ -2,11 +2,10 @@ var express = require('express');
 var router = express.Router();
 var redis = require('redis');
 var client = redis.createClient();
-client.HMSET('categories', '1','drink', '2','fruit', '3','sport');
-
+client.hmset('category', '1', "drink", '2', "fruit", '3', "sport");
 router.get('/', function (req, res) {
-  client.hgetall('categories', function (err, obj) {
-    res.send(JSON.parse(obj));
+  client.hgetall('category', function (err, obj) {
+    res.send(obj);
   });
 });
 
@@ -15,8 +14,8 @@ router.post('/', function (req, res) {
 });
 
 router.delete('/', function (req, res) {
-  client.hdel('categories', req.param('id'));
-  res.send(req.param('id'));
+  client.hdel('category', req.param('id'), function () {
+  });
 });
 
 module.exports = router;

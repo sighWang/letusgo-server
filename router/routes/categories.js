@@ -18,7 +18,7 @@ router.post('/', function (req, res) {
   res.send(req.param('id'));
 });
 
-router.delete('/', function (req, res) {
+router.delete('/:id', function (req, res) {
   client.hdel('category', req.param('id'), function () {
   });
 });

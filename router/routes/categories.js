@@ -7,15 +7,11 @@ client.hmset('category', '1', "drink", '2', "fruit", '3', "sport");
 router.get('/', function (req, res) {
   client.hgetall('category', function (err, obj) {
     var categories = [];
-    _.forEach(obj, function (name,index){
-        categories.push({id:index, name:name});
+    _.forEach(obj, function (name, index) {
+      categories.push({id: index, name: name});
     });
     res.send(categories);
   });
-});
-
-router.post('/', function (req, res) {
-  res.send(req.param('id'));
 });
 
 router.delete('/:id', function (req, res) {
@@ -25,9 +21,15 @@ router.delete('/:id', function (req, res) {
 
 router.put('/', function (req, res) {
   var category = req.param('data');
-  console.log(category + '---------');
   client.hset('category', category.id, category.name, function () {
+  });
+});
 
+router.post('/', function (req, res) {
+  var category = req.param('data');
+  console.log(category.id + category.name + '---------------');
+  client.hsetnx('category', category.id, category.name, function (err, obj){
+      res.send(category);
   });
 });
 

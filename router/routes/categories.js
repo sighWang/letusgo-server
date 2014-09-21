@@ -23,4 +23,12 @@ router.delete('/:id', function (req, res) {
   });
 });
 
+router.put('/', function (req, res) {
+  var category = req.param('data');
+  console.log(category + '---------');
+  client.hset('category', category.id, category.name, function () {
+
+  });
+});
+
 module.exports = router;

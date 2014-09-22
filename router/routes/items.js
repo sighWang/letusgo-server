@@ -29,7 +29,7 @@ router.get('/:id', function (req, res) {
   var id = req.param('id');
   client.hget('itemList', id, function (err, item) {
     var obj = JSON.parse(item);
-    res.send({id: id, name:obj.name, unit:obj.unit, price:obj.price, category:obj.category });
+    res.send({id: id, name: obj.name, unit: obj.unit, price: obj.price, category: obj.category });
   })
 });
 

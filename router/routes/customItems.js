@@ -5,16 +5,30 @@ var _ = require('lodash');
 var client = redis.createClient();
 
 router.get('/', function (req, res) {
+  var i = 0, j = 0, customItems = [];
   client.hgetall('customItemssigh', function (err, obj) {
-    var customItems = [];
-    _.forEach(obj, function (data, index) {
-      var redisItem = hget('itemList', index);
-      var item = JSON.parse(redisItem);
-      customItems.push({item: item, number: data});
-    });
-    res.send(customItems);
+
+    _.forEach(obj, function (number, index) {
+        j++;
+      });
+
+    _.forEach(obj, function (number, index) {
+      client.hget('itemList', index, function (err, item){
+        i++;
+        customItems.push({goods: JSON.parse(item), number: number});
+
+        if(i === j){
+          var categories = _.groupBy(customItems, function (custom){
+            return custom.goods.category;
+          });
+          res.send(categories);
+        }
+
+      })
+    })
+
   });
-});
+  });
 
 router.post('/:customItem', function (req, res) {
   var id = req.param('customItem');
@@ -24,7 +38,6 @@ router.post('/:customItem', function (req, res) {
   }
   else{
     client.hincrby('customItemssigh', id, increment);
-    console.log('enter 2');
   }
 });
 

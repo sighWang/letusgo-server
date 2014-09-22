@@ -4,6 +4,7 @@ var redis = require('redis');
 var _ = require('lodash');
 var client = redis.createClient();
 client.hmset('category', '1', "drink", '2', "fruit", '3', "sport");
+
 router.get('/', function (req, res) {
   client.hgetall('category', function (err, obj) {
     var categories = [];
@@ -13,6 +14,7 @@ router.get('/', function (req, res) {
     res.send(categories);
   });
 });
+
 
 router.delete('/:id', function (req, res) {
   client.hdel('category', req.param('id'));

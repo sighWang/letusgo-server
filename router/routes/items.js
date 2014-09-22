@@ -19,7 +19,7 @@ router.get('/', function (req, res) {
     var items = [];
     _.forEach(obj, function (data, index) {
       var item = JSON.parse(data);
-      items.push({id:index, name:item.name, unit:item.unit, price:item.price, category:item.category });
+      items.push({id: index, name: item.name, unit: item.unit, price: item.price, category: item.category });
     });
     res.send(items);
   });

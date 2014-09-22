@@ -25,6 +25,10 @@ router.get('/', function (req, res) {
   });
 });
 
+router.delete('/:id', function (req, res) {
+  client.hdel('itemList', req.param('id'));
+});
+
 router.post('/add', function (req, res) {
   res.send(req.param('id'));
   client.get('customItems', function (err, data) {

@@ -25,10 +25,23 @@ router.get('/', function (req, res) {
   });
 });
 
+router.get('/:id', function (req, res) {
+  var id = req.param('id');
+  client.hget('itemList', id, function (err, item) {
+    var obj = JSON.parse(item);
+    res.send({id: id, name:obj.name, unit:obj.unit, price:obj.price, category:obj.category });
+  })
+});
+
 router.delete('/:id', function (req, res) {
   client.hdel('itemList', req.param('id'));
 });
-
+router.put('/', function (req, res) {
+  var goods = req.param('data');
+  console.log(goods);
+  client.hset('itemList', goods.id,
+    JSON.stringify({name: goods.name, unit: goods.unit, price: goods.price, category: goods.category}));
+});
 router.post('/add', function (req, res) {
   res.send(req.param('id'));
   client.get('customItems', function (err, data) {

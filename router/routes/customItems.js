@@ -4,36 +4,29 @@ var redis = require('redis');
 var _ = require('lodash');
 var client = redis.createClient();
 
-client.set('customItems', JSON.stringify([]));
-
-//router.get('/', function (req, res) {
-//  client.hgetall('itemList', function (err, obj) {
-//    var items = [];
-//    _.forEach(obj, function (data, index) {
-//      var item = JSON.parse(data);
-//      items.push({id:index, name:item.name, unit:item.unit, price:item.price, category:item.category });
-//    });
-//    res.send(items);
-//  });
-//});
-
-router.put('/', function (req, res) {
-  var customItem = req.param('data');
-  client.get('customItems', function (err, data) {
-    var customItems = JSON.parse(data);
-    client.set('customItems', customItems);
-  })
-});
-
 router.get('/', function (req, res) {
-  client.get('customItems', function (err, obj) {
-    res.send(JSON.parse(obj));
+  client.hgetall('customItemssigh', function (err, obj) {
+    var customItems = [];
+    _.forEach(obj, function (data, index) {
+      var redisItem = hget('itemList', index);
+      var item = JSON.parse(redisItem);
+      customItems.push({item: item, number: data});
+    });
+    res.send(customItems);
   });
 });
 
-router.post('/customItems/edit', function (req, res) {
-  var customItems = req.param('customItems');
-  client.set('customItems', customItems);
+router.post('/:customItem', function (req, res) {
+  var id = req.param('customItem');
+  var increment = req.param('data');
+  if(client.hexists('customItemssigh', id)){
+    client.hincrby('customItemssigh', id, increment);
+  }
+  else{
+    client.hincrby('customItemssigh', id, increment);
+    console.log('enter 2');
+  }
 });
+
 
 module.exports = router;

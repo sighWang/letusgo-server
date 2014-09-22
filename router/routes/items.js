@@ -38,16 +38,13 @@ router.delete('/:id', function (req, res) {
 });
 router.put('/', function (req, res) {
   var goods = req.param('data');
-  console.log(goods);
   client.hset('itemList', goods.id,
     JSON.stringify({name: goods.name, unit: goods.unit, price: goods.price, category: goods.category}));
 });
-router.post('/add', function (req, res) {
-  res.send(req.param('id'));
-  client.get('customItems', function (err, data) {
-    var customItems = JSON.parse(data);
-    client.set('customItems', customItems);
-  })
+router.post('/', function (req, res) {
+  var goods = req.param('data');
+  client.hsetnx('itemList', goods.id,
+    JSON.stringify({name: goods.name, unit: goods.unit, price: goods.price, category: goods.category}));
 });
 
 router.get('/customItems', function (req, res) {

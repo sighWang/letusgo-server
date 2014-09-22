@@ -4,24 +4,33 @@ var redis = require('redis');
 var _ = require('lodash');
 var client = redis.createClient();
 
+
+function countLength(obj){
+  var j = 0;
+  _.forEach(obj, function (number, index) {
+    j++;
+  });
+  return j;
+}
 router.get('/', function (req, res) {
-  var i = 0, j = 0, customItems = [];
-  client.hgetall('customItemssigh', function (err, obj) {
+  var i = 0, customItems = [];
+  var total = 0;
+  client.hgetall('customItemsWang', function (err, obj) {
+    var length = countLength(obj);
 
     _.forEach(obj, function (number, index) {
-        j++;
-      });
-
-    _.forEach(obj, function (number, index) {
-      client.hget('itemList', index, function (err, item){
+      client.hget('itemList', index, function (err, data){
+        console.log(data);
+        var item = JSON.parse(data);
+        var subtotal = item.price * number;
+        customItems.push({goods: item, number: number ,subtotal:subtotal});
+        total += item.price * number;
         i++;
-        customItems.push({goods: JSON.parse(item), number: number});
-
-        if(i === j){
+        if(i === length){
           var categories = _.groupBy(customItems, function (custom){
             return custom.goods.category;
           });
-          res.send(categories);
+          res.send({categories: categories, total: total});
         }
 
       })
@@ -33,11 +42,11 @@ router.get('/', function (req, res) {
 router.post('/:customItem', function (req, res) {
   var id = req.param('customItem');
   var increment = req.param('data');
-  if(client.hexists('customItemssigh', id)){
-    client.hincrby('customItemssigh', id, increment);
+  if(client.hexists('customItemsWang', id)){
+    client.hincrby('customItemsWang', id, increment);
   }
   else{
-    client.hincrby('customItemssigh', id, increment);
+    client.hincrby('customItemsWang', id, increment);
   }
 });
 

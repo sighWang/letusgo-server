@@ -12,7 +12,6 @@ client.hmset('itemList', 'ITEM000000', JSON.stringify(cocacola),
   'ITEM000002', JSON.stringify(lychee),
   'ITEM000003', JSON.stringify(badminton));
 
-client.set('customItems', JSON.stringify([]));
 
 router.get('/', function (req, res) {
   client.hgetall('itemList', function (err, obj) {
@@ -24,6 +23,7 @@ router.get('/', function (req, res) {
     res.send(items);
   });
 });
+
 
 router.get('/:id', function (req, res) {
   var id = req.param('id');

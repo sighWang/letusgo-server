@@ -15,22 +15,17 @@ router.get('/', function (req, res) {
 });
 
 router.delete('/:id', function (req, res) {
-  client.hdel('category', req.param('id'), function () {
-  });
+  client.hdel('category', req.param('id'));
 });
 
 router.put('/', function (req, res) {
   var category = req.param('data');
-  client.hset('category', category.id, category.name, function () {
-  });
+  client.hset('category', category.id, category.name);
 });
 
 router.post('/', function (req, res) {
   var category = req.param('data');
-  console.log(category.id + category.name + '---------------');
-  client.hsetnx('category', category.id, category.name, function (err, obj){
-      res.send(category);
-  });
+  client.hsetnx('category', category.id, category.name);
 });
 
 module.exports = router;

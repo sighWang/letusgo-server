@@ -47,15 +47,4 @@ router.post('/', function (req, res) {
     JSON.stringify({name: goods.name, unit: goods.unit, price: goods.price, category: goods.category}));
 });
 
-router.get('/customItems', function (req, res) {
-  client.get('customItems', function (err, obj) {
-    res.send(JSON.parse(obj));
-  });
-});
-
-router.post('/customItems/edit', function (req, res) {
-  var customItems = req.param('customItems');
-  client.set('customItems', customItems);
-});
-
 module.exports = router;

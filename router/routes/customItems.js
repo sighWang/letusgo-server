@@ -12,6 +12,7 @@ function countLength(obj){
   });
   return j;
 }
+
 router.get('/', function (req, res) {
   var i = 1, customItems = [];
   var total = 0;
@@ -30,7 +31,6 @@ router.get('/', function (req, res) {
           var categories = _.groupBy(customItems, function (custom){
             return custom.goods.category;
           });
-          console.log(categories + '------' + total);
           res.send({categories: categories, total: total});
         }
 
@@ -43,12 +43,7 @@ router.get('/', function (req, res) {
 router.post('/:customItem', function (req, res) {
   var id = req.param('customItem');
   var increment = req.param('data');
-  console.log('1--------------' + id + '--------' + increment);
-  client.hincrby('customItemsWang', id, increment, function (err, obj){
-    console.log(obj + 'update  number');
-      res.status(404).end;
-  });
-
+  client.hincrby('customItemsWang', id, increment);
 });
 
 

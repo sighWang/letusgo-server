@@ -19,13 +19,17 @@ router.get('/', function (req, res) {
     var total = 0;
     var customItems = [];
     var length = countLength(obj);
+
     _.forEach(obj, function (number, index) {
       client.hget('itemList', index, function (err, data) {
+
         var item = JSON.parse(data);
         var subtotal = item.price * number;
         var goods = {id: index, name: item.name, unit: item.unit, price: item.price, category: item.category };
+
         customItems.push({goods: goods, number: number, subtotal: subtotal});
         total += item.price * number;
+        
         i++;
         if (i === length) {
           res.send({categories: customItems, total: total});
@@ -47,11 +51,8 @@ router.get('/cartNumber', function (req, res){
   var cartCount = 0;
   client.hgetall('customItemsWang', function (err, data) {
     _.forEach(data, function (number) {
-      var num = parseInt(number);
-        cartCount += num;
+        cartCount += parseInt(number);
     });
-    console.log(typeof cartCount);
-    console.log(cartCount);
     res.send(cartCount.toString());
   });
 });

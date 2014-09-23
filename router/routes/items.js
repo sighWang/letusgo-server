@@ -24,7 +24,6 @@ router.get('/', function (req, res) {
   });
 });
 
-
 router.get('/:id', function (req, res) {
   var id = req.param('id');
   client.hget('itemList', id, function (err, item) {

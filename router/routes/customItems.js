@@ -14,10 +14,10 @@ function countLength(obj) {
 }
 
 router.get('/', function (req, res) {
-  var i = 1;
-  var total = 0;
-  var customItems = [];
   client.hgetall('customItemsWang', function (err, obj) {
+    var i = 1;
+    var total = 0;
+    var customItems = [];
     var length = countLength(obj);
     _.forEach(obj, function (number, index) {
       client.hget('itemList', index, function (err, data) {
@@ -25,16 +25,14 @@ router.get('/', function (req, res) {
         var subtotal = item.price * number;
         var goods = {id: index, name: item.name, unit: item.unit, price: item.price, category: item.category };
         customItems.push({goods: goods, number: number, subtotal: subtotal});
-
+        total += item.price * number;
         i++;
         if (i === length) {
           var categories = _.groupBy(customItems, function (custom) {
             return custom.goods.category;
           });
-          total += item.price * number;
           res.send({categories: categories, total: total});
         }
-
       })
     })
   });
@@ -45,6 +43,7 @@ router.post('/:customItem', function (req, res) {
   var id = req.param('customItem');
   var increment = req.param('data');
   client.hincrby('customItemsWang', id, increment);
+  res.send({id: id, increment: increment});
 });
 
 

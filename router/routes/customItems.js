@@ -28,10 +28,7 @@ router.get('/', function (req, res) {
         total += item.price * number;
         i++;
         if (i === length) {
-          var categories = _.groupBy(customItems, function (custom) {
-            return custom.goods.category;
-          });
-          res.send({categories: categories, total: total});
+          res.send({categories: customItems, total: total});
         }
       })
     })

@@ -35,11 +35,13 @@ router.get('/:id', function (req, res) {
 router.delete('/:id', function (req, res) {
   client.hdel('itemList', req.param('id'));
 });
+
 router.put('/', function (req, res) {
   var goods = req.param('data');
   client.hset('itemList', goods.id,
     JSON.stringify({name: goods.name, unit: goods.unit, price: goods.price, category: goods.category}));
 });
+
 router.post('/', function (req, res) {
   var goods = req.param('data');
   client.hsetnx('itemList', goods.id,

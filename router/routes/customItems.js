@@ -43,5 +43,17 @@ router.post('/:customItem', function (req, res) {
   res.send({id: id, increment: increment});
 });
 
+router.get('/cartNumber', function (req, res){
+  var cartCount = 0;
+  client.hgetall('customItemsWang', function (err, data) {
+    _.forEach(data, function (number) {
+      var num = parseInt(number);
+        cartCount += num;
+    });
+    console.log(typeof cartCount);
+    console.log(cartCount);
+    res.send(cartCount.toString());
+  });
+});
 
 module.exports = router;
